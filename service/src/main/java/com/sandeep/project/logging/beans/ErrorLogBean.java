@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity(name="ErrorLog")
-public class ErrorLog {
+public class ErrorLogBean implements AbstractLogBeanFactory {
 	
 	@Id
 	@GeneratedValue
@@ -25,10 +25,11 @@ public class ErrorLog {
 	
 	@Column(name="createdAt",nullable=false,columnDefinition="TimeStamp default Current_Time")
 	private Time createdAt;
-	public ErrorLog() {}
-	public ErrorLog(String errorCode, String errorMessage) {
+	public ErrorLogBean() {}
+	public ErrorLogBean(String errorCode, String errorMessage) {
 		this.setErrorCode(errorCode);
 		this.setErrorMessage(errorMessage);
+		this.createdAt = new Time(System.currentTimeMillis());
 	}
 	/**
 	 * @return the errorCode

@@ -1,5 +1,7 @@
 package com.sandeep.project.logging.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sandeep.project.logging.beans.AbstractLogBeanFactory;
 import com.sandeep.project.logging.dto.AbstractLog;
 import com.sandeep.project.logging.handler.AbstractLogTypeHandler;
 import com.sandeep.project.logging.handler.LogTypeHandlerFactory;
@@ -25,14 +28,14 @@ public class LoggingController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void log(@PathVariable("serviceIdentifier") String serviceIdentifier, @RequestBody AbstractLog log) {
+	public String log(@PathVariable("serviceIdentifier") String serviceIdentifier, @RequestBody AbstractLog log) {
 		log.setServiceIdentifier(serviceIdentifier);
-		logTypeHandlerFactory.get(log.getLogType() + AbstractLogTypeHandler.BEAN_SUFFIX).handle(log);
+		return logTypeHandlerFactory.get(log.getLogType() + AbstractLogTypeHandler.BEAN_SUFFIX).handle(log).toString();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, params = "logType")
-	public AbstractLog findByLogType(@PathVariable("serviceIdentifier") String serviceIdentifier, @RequestParam("logType") String logType) {
-		return null;
+	public List<AbstractLogBeanFactory> findByLogType(@PathVariable("serviceIdentifier") String serviceIdentifier, @RequestParam("logType") String logType) {
+		return logTypeHandlerFactory.get(logType + AbstractLogTypeHandler.BEAN_SUFFIX).findLogs(logType);
 	}
 
 }
