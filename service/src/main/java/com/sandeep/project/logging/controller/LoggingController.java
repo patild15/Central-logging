@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,8 @@ public class LoggingController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, params = "logType")
-	public List<AbstractLogBeanFactory> findByLogType(@PathVariable("serviceIdentifier") String serviceIdentifier, @RequestParam("logType") String logType) {
+	public @ResponseBody List<AbstractLogBeanFactory> findByLogType(@PathVariable("serviceIdentifier") String serviceIdentifier, @RequestParam("logType") String logType) {
+		System.out.println("in get method");
 		return logTypeHandlerFactory.get(logType + AbstractLogTypeHandler.BEAN_SUFFIX).findLogs(logType);
 	}
 

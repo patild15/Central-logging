@@ -15,7 +15,7 @@ public class ErrorLogBean implements AbstractLogBeanFactory {
 	@GeneratedValue
 	private Long id;
 
-	public static final String LOG_TYPE = "ERROR";
+	private final String logType = "ERROR";
 
 	@NotNull
 	private String errorCode;
@@ -54,5 +54,8 @@ public class ErrorLogBean implements AbstractLogBeanFactory {
 	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+	public String getLogType() {
+		return logType;
 	}
 }
