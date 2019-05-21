@@ -29,3 +29,10 @@ http://localhost:9090/log/mock/email/{user-id}/success?fromEmail={email}&toEmail
 http://localhost:9090/log/mock/email/{user-id}/fail?fromEmail={email}&toEmail={email}&subject={subject}
 
 http://localhost:9090/log/mock/error?errorCode={errorcode}&errorMessage={someErrorMessage}
+
+Database can be seen at:
+http://localhost:8080/h2/
+db_url=jdbc:h2:./db/centralLogging
+
+API to fetch logs from database can be accessed at 
+http://localhost:8080/log/service-client?logType={log_type}
